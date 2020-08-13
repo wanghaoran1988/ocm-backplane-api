@@ -184,10 +184,6 @@ func NewProxy(apiProxyPrefix string, cfg *rest.Config, keepalive time.Duration) 
 	proxy.UseRequestLocation = true
 
 	proxyServer := http.Handler(proxy)
-	//if filter != nil {
-	//	proxyServer = filter.HandlerFor(proxyServer)
-	//}
-
 	if !strings.HasPrefix(apiProxyPrefix, "/api") {
 		proxyServer = stripLeaveSlash(apiProxyPrefix, proxyServer)
 	}
@@ -206,10 +202,6 @@ func (s *Server) ServeOnListener(l net.Listener) error {
 		Handler: s.handler,
 	}
 	return server.Serve(l)
-}
-
-func newFileHandler(prefix, base string) http.Handler {
-	return http.StripPrefix(prefix, http.FileServer(http.Dir(base)))
 }
 
 // like http.StripPrefix, but always leaves an initial slash. (so that our

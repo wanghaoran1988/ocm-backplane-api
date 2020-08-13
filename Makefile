@@ -3,3 +3,7 @@ build: clean
 
 clean:
 	rm -f ocm-backplane-api
+
+.PHONY: lint
+lint:
+	golangci-lint run
